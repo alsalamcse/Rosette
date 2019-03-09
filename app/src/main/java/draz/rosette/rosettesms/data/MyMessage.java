@@ -4,6 +4,19 @@ public class MyMessage {
     private String key;// key: unique id for each object. have to be....
     private String toTitle;
     private String onTitle;
+    private String message;
+    private String reciver;
+    private String app;
+    private String time;
+
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public String getToTitle() {
         return toTitle;
@@ -19,20 +32,6 @@ public class MyMessage {
 
     public void setOnTitle(String onTitle) {
         this.onTitle = onTitle;
-    }
-
-    private String message;
-    private String reciver;
-    private String app;
-    private String time;
-
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
     }
 
     public String getMessage() {

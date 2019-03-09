@@ -13,9 +13,9 @@ import android.widget.TextView;
 import draz.rosette.rosettesms.MessageActivity;
 import draz.rosette.rosettesms.R;
 
-public class Adapter extends ArrayAdapter <MyMessage> {
+public class messageAdapter extends ArrayAdapter <MyMessage> {
 
-    public Adapter(Context context, int resource) {
+    public messageAdapter(Context context, int resource) {
         super(context, resource);
     }
 
