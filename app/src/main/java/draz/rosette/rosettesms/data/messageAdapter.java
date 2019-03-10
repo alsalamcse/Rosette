@@ -27,6 +27,7 @@ public class messageAdapter extends ArrayAdapter <MyMessage> {
         final MyMessage myMessage = getItem(position);
 
         if (convertView == null) {
+            convertView=LayoutInflater.from(getContext()).inflate(R.layout.message_item, parent, false);
             TextView tvto = convertView.findViewById(R.id.tvto);
             TextView tvReciver = convertView.findViewById(R.id.tvReciver);
             TextView tvTimePicked = convertView.findViewById(R.id.tvTimePicked);
