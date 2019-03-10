@@ -20,11 +20,13 @@ public class messageAdapter extends ArrayAdapter <MyMessage> {
     }
 
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        final MyMessage myMessage = getItem(position);
+
         if (convertView == null) {
-            final MyMessage myMessage = getItem(position);
             TextView tvto = convertView.findViewById(R.id.tvto);
             TextView tvReciver = convertView.findViewById(R.id.tvReciver);
             TextView tvTimePicked = convertView.findViewById(R.id.tvTimePicked);
@@ -36,19 +38,20 @@ public class messageAdapter extends ArrayAdapter <MyMessage> {
 
 
 
-            tvto.setText(myMessage.getToTitle());
-            tvTime.setText(myMessage.getOnTitle());
-            tvTimePicked.setText(myMessage.getTime());
-            tvReciver.setText(myMessage.getReciver());
-            tvTimePicked.setText(myMessage.getTime());
+          //  tvto.setText(myMessage.getToTitle());
+          //  tvTime.setText(myMessage.getOnTitle());
+          //  tvTimePicked.setText(myMessage.getTime());
+          //  tvReciver.setText(myMessage.getReciver());
+          //  tvTimePicked.setText(myMessage.getTime());
            ibtnEdit.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
                  Intent i=new Intent(getContext(), MessageActivity.class);
-                i.putExtra("message", (Parcelable) myMessage);
+                i.putExtra("Message", (Parcelable) myMessage);
                    getContext().startActivity(i);
                }
            });
+
 
 
 

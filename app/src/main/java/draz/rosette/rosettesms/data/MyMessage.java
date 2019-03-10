@@ -9,6 +9,16 @@ public class MyMessage {
     private String app;
     private String time;
 
+    public MyMessage() {
+    }
+
+    public MyMessage(String key, String message, String reciver, String app, String time) {
+        this.key = key;
+        this.message = message;
+        this.reciver = reciver;
+        this.app = app;
+        this.time = time;
+    }
 
     public String getKey() {
         return key;
@@ -68,13 +78,7 @@ public class MyMessage {
 
 
 
-    public MyMessage(String key, String message, String reciver, String app, String time) {
-        this.key = key;
-        this.message = message;
-        this.reciver = reciver;
-        this.app = app;
-        this.time = time;
-    }
+
 
     @Override
     public String toString() {
