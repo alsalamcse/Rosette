@@ -39,7 +39,7 @@ public class messageAdapter extends ArrayAdapter <MyMessage> {
 
 
 
-          //  tvto.setText(myMessage.getToTitle());
+          // tvto.setText(myMessage.getToTitle());
           //  tvTime.setText(myMessage.getOnTitle());
           //  tvTimePicked.setText(myMessage.getTime());
           //  tvReciver.setText(myMessage.getReciver());

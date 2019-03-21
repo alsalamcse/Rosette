@@ -1,17 +1,25 @@
 package draz.rosette.rosettesms;
 
+import android.accessibilityservice.AccessibilityService;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.provider.ContactsContract;
+import android.provider.Settings;
+import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -19,10 +27,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+
+import java.io.File;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.List;
 
-public class MessageMangerActivity extends AppCompatActivity {
+import javax.sql.CommonDataSource;
+
+import draz.rosette.rosettesms.test.WhatsappAccessibilityService;
+
+public class MessageMangerActivity extends AppCompatActivity{
 
     private EditText etMessage;
     private TextView textView;
@@ -36,14 +52,17 @@ public class MessageMangerActivity extends AppCompatActivity {
     // private DatePickerDialog datePickerDialog;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_manger);
         showTimePickerDialog();
-        openWhatsApp( );
-
-
+     //  openWhatsApp( );
+        if (!isAccessibilityOn (this, WhatsappAccessibilityService.class)) {
+            Intent intent = new Intent (Settings.ACTION_ACCESSIBILITY_SETTINGS);
+            this.startActivity (intent);
+        }
 
     }
 
@@ -77,24 +96,48 @@ public class MessageMangerActivity extends AppCompatActivity {
 
                 }
             };
+//
+//    public void openWhatsApp( ){
+//        try {
+//            String text = "This is a test";// Replace with your message.
+//
+//            String toNumber = "+972543460494"; // Replace with mobile phone number without +Sign or leading zeros, but with country code
+//            //Suppose your country is India and your phone number is “xxxxxxxxxx”, then you need to send “91xxxxxxxxxx”.
+//
+//            Intent intent = new Intent(Intent.ACTION_SEND);
+//            intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+toNumber +"&text="+text));
+//            startActivity(intent);
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
-    public void openWhatsApp( ){
+    private boolean isAccessibilityOn (Context context, Class<? extends AccessibilityService> clazz) {
+        int accessibilityEnabled = 1;
+        final String service = context.getPackageName () + "/" + clazz.getCanonicalName ();
         try {
-            String text = "This is a test";// Replace with your message.
+            accessibilityEnabled = Settings.Secure.getInt (context.getApplicationContext ().getContentResolver (), Settings.Secure.ACCESSIBILITY_ENABLED);
+        } catch (Settings.SettingNotFoundException ignored) { ignored.printStackTrace(); }
 
-            String toNumber = "+972543460494"; // Replace with mobile phone number without +Sign or leading zeros, but with country code
-            //Suppose your country is India and your phone number is “xxxxxxxxxx”, then you need to send “91xxxxxxxxxx”.
+        TextUtils.SimpleStringSplitter colonSplitter = new TextUtils.SimpleStringSplitter (':');
 
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+toNumber +"&text="+text));
-            startActivity(intent);
+        if (accessibilityEnabled == 1) {
+            String settingValue = Settings.Secure.getString (context.getApplicationContext ().getContentResolver (), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+            if (settingValue != null) {
+                colonSplitter.setString (settingValue);
+                while (colonSplitter.hasNext ()) {
+                    String accessibilityService = colonSplitter.next ();
+
+                    if (accessibilityService.equalsIgnoreCase (service)) {
+                        return true;
+                    }
+                }
+            }
         }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+
+        return false;
     }
-
-
     }
 
 
