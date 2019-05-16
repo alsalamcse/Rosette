@@ -1,23 +1,29 @@
 package draz.rosette.rosettesms;
 
+import android.Manifest;
 import android.accessibilityservice.AccessibilityService;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
+import android.telephony.SmsManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
@@ -36,13 +42,15 @@ import java.util.List;
 
 import javax.sql.CommonDataSource;
 
-import draz.rosette.rosettesms.test.WhatsappAccessibilityService;
+
 
 public class MessageMangerActivity extends AppCompatActivity{
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
 
-    private EditText etMessage;
+
+    private EditText etMessage, etPhone;
     private TextView textView;
-    private Button btnPick;
+    private Button btnPick, btnSubmit;
     static final int DIALOG_ID = 0;
     int hourFinal;
     int minuteFinal;
@@ -58,26 +66,93 @@ public class MessageMangerActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_manger);
         showTimePickerDialog();
-     //  openWhatsApp( );
-        if (!isAccessibilityOn (this, WhatsappAccessibilityService.class)) {
-            Intent intent = new Intent (Settings.ACTION_ACCESSIBILITY_SETTINGS);
-            this.startActivity (intent);
-        }
+
+
+
+//        private void checkForSmsPermission() {
+//            if (ActivityCompat.checkSelfPermission(this,
+//                    Manifest.permission.SEND_SMS) !=
+//                    PackageManager.PERMISSION_GRANTED) {
+//                Log.d( getString(R.string.permission_not_granted));
+//                // Permission not yet granted. Use requestPermissions().
+//                // MY_PERMISSIONS_REQUEST_SEND_SMS is an
+//                // app-defined int constant. The callback method gets the
+//                // result of the request.
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.SEND_SMS},
+//                        MY_PERMISSIONS_REQUEST_SEND_SMS);
+//            } else {
+//                // Permission already granted. Enable the SMS button.
+//                enableSmsButton();
+//            }
+//        }
+
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                smsSendMessage();
+            }
+
+            private void smsSendMessage() {
+
+                EditText editText = (EditText) findViewById(R.id.etPhone);
+                // Set the destination phone number to the string in editText.
+                String destinationAddress = editText.getText().toString();
+                // Find the sms_message view.
+                EditText smsEditText = (EditText) findViewById(R.id.etMessage);
+                // Get the text of the sms message.
+                String smsMessage = smsEditText.getText().toString();
+
+               // Set the service center address if needed, otherwise null.
+                        String scAddress = null;
+                // Set pending intents to broadcast
+                // when message sent and when delivered, or set to null.
+                PendingIntent sentIntent = null, deliveryIntent = null;
+
+                // Use SmsManager.
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage
+                        (destinationAddress, scAddress, smsMessage,
+                                sentIntent, deliveryIntent);
+            }
+        });
 
     }
+
+
 
     public void showTimePickerDialog() {
         btnPick = findViewById(R.id.btnPick);
         textView = findViewById(R.id.textView);
 
-        btnPick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(DIALOG_ID);
-            }
-        });
+
+//        btnSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                smsSendMessage();
+//            }
+//        });
 
     }
+
+//    private void smsSendMessage() {
+//        EditText etMessage = (EditText) findViewById(R.id.etMessage);
+//        String stMessage = etMessage.getText().toString();
+//
+//        String phone = "+972522982533";
+//        // Set the service center address if needed, otherwise null.
+//        String scAddress = null;
+//// Set pending intents to broadcast
+//// when message sent and when delivered, or set to null.
+//        PendingIntent sentIntent = null, deliveryIntent = null;
+//        SmsManager smsManager = SmsManager.getDefault();
+//        smsManager.sendTextMessage
+//                (phone, scAddress, stMessage,
+//                        sentIntent, deliveryIntent);
+//
+
+
 
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -96,48 +171,9 @@ public class MessageMangerActivity extends AppCompatActivity{
 
                 }
             };
-//
-//    public void openWhatsApp( ){
-//        try {
-//            String text = "This is a test";// Replace with your message.
-//
-//            String toNumber = "+972543460494"; // Replace with mobile phone number without +Sign or leading zeros, but with country code
-//            //Suppose your country is India and your phone number is “xxxxxxxxxx”, then you need to send “91xxxxxxxxxx”.
-//
-//            Intent intent = new Intent(Intent.ACTION_SEND);
-//            intent.setData(Uri.parse("http://api.whatsapp.com/send?phone="+toNumber +"&text="+text));
-//            startActivity(intent);
-//        }
-//        catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
 
-    private boolean isAccessibilityOn (Context context, Class<? extends AccessibilityService> clazz) {
-        int accessibilityEnabled = 1;
-        final String service = context.getPackageName () + "/" + clazz.getCanonicalName ();
-        try {
-            accessibilityEnabled = Settings.Secure.getInt (context.getApplicationContext ().getContentResolver (), Settings.Secure.ACCESSIBILITY_ENABLED);
-        } catch (Settings.SettingNotFoundException ignored) { ignored.printStackTrace(); }
 
-        TextUtils.SimpleStringSplitter colonSplitter = new TextUtils.SimpleStringSplitter (':');
 
-        if (accessibilityEnabled == 1) {
-            String settingValue = Settings.Secure.getString (context.getApplicationContext ().getContentResolver (), Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
-            if (settingValue != null) {
-                colonSplitter.setString (settingValue);
-                while (colonSplitter.hasNext ()) {
-                    String accessibilityService = colonSplitter.next ();
-
-                    if (accessibilityService.equalsIgnoreCase (service)) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
     }
 
 
