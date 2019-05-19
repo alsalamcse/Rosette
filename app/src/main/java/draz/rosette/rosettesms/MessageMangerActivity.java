@@ -66,26 +66,8 @@ public class MessageMangerActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_manger);
         showTimePickerDialog();
+        checkForSmsPermission();
 
-
-
-//        private void checkForSmsPermission() {
-//            if (ActivityCompat.checkSelfPermission(this,
-//                    Manifest.permission.SEND_SMS) !=
-//                    PackageManager.PERMISSION_GRANTED) {
-//                Log.d( getString(R.string.permission_not_granted));
-//                // Permission not yet granted. Use requestPermissions().
-//                // MY_PERMISSIONS_REQUEST_SEND_SMS is an
-//                // app-defined int constant. The callback method gets the
-//                // result of the request.
-//                ActivityCompat.requestPermissions(this,
-//                        new String[]{Manifest.permission.SEND_SMS},
-//                        MY_PERMISSIONS_REQUEST_SEND_SMS);
-//            } else {
-//                // Permission already granted. Enable the SMS button.
-//                enableSmsButton();
-//            }
-//        }
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +87,7 @@ public class MessageMangerActivity extends AppCompatActivity{
                 String smsMessage = smsEditText.getText().toString();
 
                // Set the service center address if needed, otherwise null.
-                        String scAddress = null;
+                        String scAddress = "0548047916";
                 // Set pending intents to broadcast
                 // when message sent and when delivered, or set to null.
                 PendingIntent sentIntent = null, deliveryIntent = null;
@@ -118,10 +100,51 @@ public class MessageMangerActivity extends AppCompatActivity{
             }
         });
 
+
+
     }
 
+    private void checkForSmsPermission() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.SEND_SMS) !=
+                PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Permission not yet granted.", Toast.LENGTH_LONG).show();
+           //Log.e(Tag, "Permission not yet granted");
+            // Permission not yet granted. Use requestPermissions().
+            // MY_PERMISSIONS_REQUEST_SEND_SMS is an
+            // app-defined int constant. The callback method gets the
+            // result of the request.
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.SEND_SMS},
+                    MY_PERMISSIONS_REQUEST_SEND_SMS);
+        } else {
+            // Permission already granted. Toast.
+            Toast.makeText(this, "Permission already granted.", Toast.LENGTH_LONG).show();
+        }
 
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_SEND_SMS: {
+                if (permissions[0].equalsIgnoreCase
+                        (Manifest.permission.SEND_SMS)
+                        && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    // Permission was granted. Toast.
+                    Toast.makeText(this, "Permission was granted.", Toast.LENGTH_LONG).show();
+                } else {
+                    // Permission denied.
+                   // Log.d(TAG, getString(R.string.failure_permission));
+                    Toast.makeText(this, "failure_permission.", Toast.LENGTH_LONG).show();
 
+                    // Disable the sms button.
+
+                }
+            }
+        }
+    }
     public void showTimePickerDialog() {
         btnPick = findViewById(R.id.btnPick);
         textView = findViewById(R.id.textView);
