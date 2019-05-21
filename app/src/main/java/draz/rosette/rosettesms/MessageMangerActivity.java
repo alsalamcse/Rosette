@@ -66,38 +66,39 @@ public class MessageMangerActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_manger);
         showTimePickerDialog();
-        checkForSmsPermission();
+     //   checkForSmsPermission();
 
 
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smsSendMessage();
+
+                //smsSendMessage();
             }
-
-            private void smsSendMessage() {
-
-                EditText editText = (EditText) findViewById(R.id.etPhone);
-                // Set the destination phone number to the string in editText.
-                String destinationAddress = editText.getText().toString();
-                // Find the sms_message view.
-                EditText smsEditText = (EditText) findViewById(R.id.etMessage);
-                // Get the text of the sms message.
-                String smsMessage = smsEditText.getText().toString();
-
-               // Set the service center address if needed, otherwise null.
-                        String scAddress = "0548047916";
-                // Set pending intents to broadcast
-                // when message sent and when delivered, or set to null.
-                PendingIntent sentIntent = null, deliveryIntent = null;
-
-                // Use SmsManager.
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage
-                        (destinationAddress, scAddress, smsMessage,
-                                sentIntent, deliveryIntent);
-            }
+//
+//            private void smsSendMessage() {
+//
+//            //    EditText editText = (EditText) findViewById(R.id.etPhone);
+//                // Set the destination phone number to the string in editText.
+//            //    String destinationAddress = editText.getText().toString();
+//                // Find the sms_message view.
+//                EditText smsEditText = (EditText) findViewById(R.id.etMessage);
+//                // Get the text of the sms message.
+//                String smsMessage = smsEditText.getText().toString();
+//
+//               // Set the service center address if needed, otherwise null.
+//                        String scAddress = "0548047916";
+//                // Set pending intents to broadcast
+//                // when message sent and when delivered, or set to null.
+//                PendingIntent sentIntent = null, deliveryIntent = null;
+//
+//                // Use SmsManager.
+//                SmsManager smsManager = SmsManager.getDefault();
+//                smsManager.sendTextMessage
+//                        (destinationAddress, scAddress, smsMessage,
+//                                sentIntent, deliveryIntent);
+//            }
         });
 
 
