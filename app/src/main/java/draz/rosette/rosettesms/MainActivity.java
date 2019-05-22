@@ -12,16 +12,17 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView lvMessages;
     private Adapter messageAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lvMessages=(ListView) findViewById(R.id.lvMessages);
-        messageAdapter=new messageAdapter(getBaseContext(), R.layout.message_item);
+        lvMessages = (ListView) findViewById(R.id.lvMessages);
+        messageAdapter = new messageAdapter(getBaseContext(), R.layout.message_item);
         lvMessages.setAdapter((ListAdapter) messageAdapter);
 
-    }
 
+    }
 
 }

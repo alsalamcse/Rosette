@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="55dp"
-        android:text="Message:"
+        android:text="Text:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:text="Send to:"
+        android:text="Recipient:"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvReciver"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:text="App:"
+        android:text="By:"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvPickedApp"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Time:"
+        android:text="At:"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvTimePicked"
         app:layout_constraintStart_toStartOf="parent" />
 
