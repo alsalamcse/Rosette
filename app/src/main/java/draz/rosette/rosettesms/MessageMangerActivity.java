@@ -63,6 +63,13 @@ public class MessageMangerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message_manger);
         SmsManager smsManager = SmsManager.getDefault();
 
+        Calendar cal = Calendar.getInstance();
+        int currentminute = cal.get(Calendar.MINUTE);
+        //12 hour format
+        int currenthour = cal.get(Calendar.HOUR);
+        //24 hour format
+        int currenthourofday = cal.get(Calendar.HOUR_OF_DAY);
+
 //Send the SMS//
 
         smsManager.sendTextMessage("0543460494", null, "Rosette's app", null, null);
@@ -73,7 +80,10 @@ public class MessageMangerActivity extends AppCompatActivity {
         final int hour = calendar.get(Calendar.HOUR_OF_DAY);
         final int minute = calendar.get(Calendar.MINUTE);
 
+
+
         btnPick = (Button) findViewById(R.id.btnPick);
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
         etMessage = (EditText) findViewById(R.id.etMessage);
         etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
 
@@ -90,6 +100,15 @@ public class MessageMangerActivity extends AppCompatActivity {
                 timePickerDialog.show();
             }
 
+        });
+        if(currenthour == hour)
+            pickedTime.setText("yofee");
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
         });
     }
 }

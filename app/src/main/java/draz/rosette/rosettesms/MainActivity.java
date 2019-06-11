@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         lvMessages.setAdapter((ListAdapter) messageAdapter);
 
 
+
     }
 
 }
