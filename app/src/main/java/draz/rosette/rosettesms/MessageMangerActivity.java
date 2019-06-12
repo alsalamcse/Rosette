@@ -57,7 +57,10 @@ public class MessageMangerActivity extends AppCompatActivity {
     private Button btnPick, btnSubmit;
     static final int DIALOG_ID = 0;
     private TimePicker alarmTimePicker;
-    private PendingIntent pendingIntent;
+
+    private AlarmManager alarmMgr;
+    private PendingIntent alarmIntent;
+
 
     Context mContext = this;
 
@@ -65,7 +68,17 @@ public class MessageMangerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_manger);
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmService.class);
+        alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+// Set the alarm to start at 8:30 a.m.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 9);
+        calendar.set(Calendar.MINUTE, 24);
+
+
 
         //Send the SMS//
 
@@ -73,16 +86,7 @@ public class MessageMangerActivity extends AppCompatActivity {
         smsManager.sendTextMessage("0543460494", null, "sms message", null, null);
 
 
-        Date currentDate= Calendar.getInstance().getTime();
-
-
-
-
-
-
-
-
-
+      //  Date currentDate= Calendar.getInstance().getTime();
 
 
 
@@ -92,7 +96,6 @@ public class MessageMangerActivity extends AppCompatActivity {
 
         pickedTime = (TextView) findViewById(R.id.pickedTime);
 
-        Calendar calendar = Calendar.getInstance();
         final int hour = calendar.get(Calendar.HOUR_OF_DAY);
         final int minute = calendar.get(Calendar.MINUTE);
 
@@ -130,18 +133,18 @@ public class MessageMangerActivity extends AppCompatActivity {
     }
 
 
-public void onTime (View view)
-{
-
-    Calendar calendar = Calendar.getInstance();
-    calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
-    calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
-    Intent myIntent = new Intent(MessageMangerActivity.this, MainActivity.class);
-    pendingIntent = PendingIntent.getBroadcast(MessageMangerActivity.this, 0, myIntent, 0);
-    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-
-
-}
+//public void onTime (View view)
+//{
+//
+//    Calendar calendar = Calendar.getInstance();
+//    calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
+//    calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
+//    Intent myIntent = new Intent(MessageMangerActivity.this, MainActivity.class);
+//    pendingIntent = PendingIntent.getBroadcast(MessageMangerActivity.this, 0, myIntent, 0);
+//    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+//
+//
+//}
 
 
 }
