@@ -13,6 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
+        <activity android:name=".AlarmReceiver" />
+        <activity android:name=".AlarmActivity" />
+        <activity android:name=".MyMessageActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".MessageMangerActivity" />
         <activity android:name=".SplashActivity">
@@ -23,8 +31,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MessageActivity" />
-
-
     </application>
 
 </manifest>
