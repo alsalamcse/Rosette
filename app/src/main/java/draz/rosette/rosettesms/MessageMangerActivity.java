@@ -4,6 +4,7 @@ import android.Manifest;
 import android.accessibilityservice.AccessibilityService;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
@@ -40,6 +41,7 @@ import java.io.File;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.CommonDataSource;
@@ -48,12 +50,14 @@ import javax.sql.CommonDataSource;
 
 public class MessageMangerActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
-
+    AlarmManager alarmManager;
 
     private EditText etMessage, etPhoneNumber;
     private TextView pickedTime;
     private Button btnPick, btnSubmit;
     static final int DIALOG_ID = 0;
+    private TimePicker alarmTimePicker;
+    private PendingIntent pendingIntent;
 
     Context mContext = this;
 
@@ -61,18 +65,30 @@ public class MessageMangerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_manger);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        //Send the SMS//
+
         SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage("0543460494", null, "sms message", null, null);
 
-        Calendar cal = Calendar.getInstance();
-        int currentminute = cal.get(Calendar.MINUTE);
-        //12 hour format
-        int currenthour = cal.get(Calendar.HOUR);
-        //24 hour format
-        int currenthourofday = cal.get(Calendar.HOUR_OF_DAY);
 
-//Send the SMS//
+        Date currentDate= Calendar.getInstance().getTime();
 
-        smsManager.sendTextMessage("0543460494", null, "Rosette's app", null, null);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         pickedTime = (TextView) findViewById(R.id.pickedTime);
 
@@ -91,7 +107,7 @@ public class MessageMangerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                TimePickerDialog timePickerDialog = new TimePickerDialog(mContext, new TimePickerDialog.OnTimeSetListener() {
+                final TimePickerDialog timePickerDialog = new TimePickerDialog(mContext, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         pickedTime.setText(hourOfDay + ":" + minute);
@@ -101,8 +117,9 @@ public class MessageMangerActivity extends AppCompatActivity {
             }
 
         });
-        if(currenthour == hour)
-            pickedTime.setText("yofee");
+
+    //    Toast.makeText(getApplicationContext(), timePickerDialog.getC.toString(), Toast.LENGTH_SHORT).show();
+
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,4 +128,20 @@ public class MessageMangerActivity extends AppCompatActivity {
             }
         });
     }
+
+
+public void onTime (View view)
+{
+
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
+    calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
+    Intent myIntent = new Intent(MessageMangerActivity.this, MainActivity.class);
+    pendingIntent = PendingIntent.getBroadcast(MessageMangerActivity.this, 0, myIntent, 0);
+    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+
+
+}
+
+
 }
