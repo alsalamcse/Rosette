@@ -72,6 +72,10 @@ public class MessageMangerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message_manger);
         etMessage = (EditText) findViewById(R.id.etMessage);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        //Send the SMS//
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage("0543460494", null, "sms message", null, null);
+
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
