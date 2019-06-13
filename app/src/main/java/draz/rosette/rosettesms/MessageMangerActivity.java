@@ -64,30 +64,35 @@ public class MessageMangerActivity extends AppCompatActivity {
 //    private PendingIntent alarmIntent;
 
 
-    //Context mContext = this;
+    Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_manger);
+
         etMessage = (EditText) findViewById(R.id.etMessage);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
+
+
         //Send the SMS//
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage("0543460494", null, "sms message", null, null);
 
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int time = Integer.parseInt(etMessage.getText().toString());
-                Intent i = new Intent(MessageMangerActivity.this, Alarm.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, i, 0);
-                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time * 1000, pendingIntent);
-            }
-        });
+//        btnSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int time = Integer.parseInt(etMessage.getText().toString());
+//                Intent i = new Intent(MessageMangerActivity.this, Alarm.class);
+//                PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, i, 0);
+//                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + time * 1000, pendingIntent);
+//            }
+//        });
 
+
+        //Alarm setter//
 
 //        alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 //        Intent intent = new Intent(this, AlarmService.class);
@@ -99,64 +104,44 @@ public class MessageMangerActivity extends AppCompatActivity {
 //        calendar.set(Calendar.MINUTE, 24);
 //
 
-        //Send the SMS//
-
-        SmsManager smsManager = SmsManager.getDefault();
-        smsManager.sendTextMessage("0543460494", null, "sms message", null, null);
-
-
         Date currentDate = Calendar.getInstance().getTime();
 
 
-        pickedTime = (TextView) findViewById(R.id.pickedTime);
+//        pickedTime = (TextView) findViewById(R.id.pickedTime);
+//
+//
+//
+//
+//        btnPick = (Button) findViewById(R.id.btnPick);
+//        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+//        etMessage = (EditText) findViewById(R.id.etMessage);
+//        etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
 
-
-
-
-        btnPick = (Button) findViewById(R.id.btnPick);
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        etMessage = (EditText) findViewById(R.id.etMessage);
-        etPhoneNumber = (EditText) findViewById(R.id.etPhoneNumber);
-
-        btnPick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final TimePickerDialog timePickerDialog = new TimePickerDialog(mContext, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        pickedTime.setText(hourOfDay + ":" + minute);
-                    }
-                }, hour, minute, android.text.format.DateFormat.is24HourFormat(mContext));
-                timePickerDialog.show();
-            }
-
-        });
+//        btnPick.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                final TimePickerDialog timePickerDialog = new TimePickerDialog(mContext, new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                        pickedTime.setText(hourOfDay + ":" + minute);
+//                    }
+//                }, hour, minute, android.text.format.DateFormat.is24HourFormat(mContext));
+//                timePickerDialog.show();
+//            }
+//
+//        });
 
         //    Toast.makeText(getApplicationContext(), timePickerDialog.getC.toString(), Toast.LENGTH_SHORT).show();
 
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        btnSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
     }
 
 }
-
-//public void onTime (View view)
-//{
-//
-//    Calendar calendar = Calendar.getInstance();
-//    calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
-//    calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
-//    Intent myIntent = new Intent(MessageMangerActivity.this, MainActivity.class);
-//    pendingIntent = PendingIntent.getBroadcast(MessageMangerActivity.this, 0, myIntent, 0);
-//    alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
-//
-//
-//}
-
 

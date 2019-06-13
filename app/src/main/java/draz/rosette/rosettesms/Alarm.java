@@ -59,13 +59,16 @@ public class Alarm extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        //   Toast.makeText(context,"finally", Toast.LENGTH_LONG).show();
-        //Send the SMS//
-        SmsManager smsManager = SmsManager.getDefault();
-        smsManager.sendTextMessage("0543460494", null, "sms message", null, null);
 
-        Intent i = new Intent(context, MainActivity.class);
-        i.putExtra("1", 1);
+        //receive the alarm//
+
+           Toast.makeText(context,"finally", Toast.LENGTH_LONG).show();
+        //Send the SMS//
+//        SmsManager smsManager = SmsManager.getDefault();
+//        smsManager.sendTextMessage("0543460494", null, "sms message", null, null);
+//
+//        Intent i = new Intent(context, MainActivity.class);
+//        i.putExtra("1", 1);
 
 
     }
