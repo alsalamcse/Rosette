@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 
+import draz.rosette.rosettesms.data.MyMessage;
+
 public class SplashActivity extends AppCompatActivity {
 
     @Override
@@ -25,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
         public void run() {
             try {
                 sleep(3000);
-                Intent i=new Intent(getApplicationContext(),AlarmActivity.class);
+                Intent i=new Intent(getApplicationContext(), MessageMangerActivity.class);
                 startActivity(i);
             } catch (InterruptedException e) {
                 e.printStackTrace();
